@@ -7,4 +7,4 @@ Bei einer falschen Antwort fällt sie zurück in einen früheren Kasten.
 So wird sichergestellt, dass du schwierige Themen häufiger wiederholst und dir die Inhalte langfristig besser einprägen kannst.
 
 ## Aufbau
-![Diagramm](/Zeddelkaschde.png)
+![Diagramm](./Zeddelkaschde.PNG)
