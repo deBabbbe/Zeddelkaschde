@@ -42,6 +42,20 @@ public class LogicTests
             var result = target.GetZeddelList();
             Assert.That(result, Is.Empty);
         }
+
+        [Test]
+        public void RemoveZeddelTest_ZettelNotFound()
+        {
+            var addedZeddel = _fixture.Create<Zeddel>();
+            var notAddedZeddel = _fixture.Create<Zeddel>();
+            var target = new Logic();
+            target.AddZeddel(addedZeddel);
+
+            Assert.DoesNotThrow(() => target.RemoveZeddel(notAddedZeddel));
+
+            var result = target.GetZeddelList();
+            Assert.That(result, Has.Member(addedZeddel));
+        }
     }
 
     public class KaschdeTests
@@ -80,6 +94,20 @@ public class LogicTests
             target.RemoveKaschde(kaschde);
 
             Assert.That(result, Is.Empty);
+        }
+
+        [Test]
+        public void RemoveKaschdeTest_KaschdeNotFound()
+        {
+            var addedKaschde = _fixture.Create<Kaschde>();
+            var notAddedKaschde = _fixture.Create<Kaschde>();
+            var target = new Logic();
+            target.AddKaschde(addedKaschde);
+
+            Assert.DoesNotThrow(() => target.RemoveKaschde(notAddedKaschde));
+
+            var result = target.GetKaschdeList();
+            Assert.That(result, Has.Member(addedKaschde));
         }
     }
 }
