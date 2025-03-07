@@ -5,3 +5,6 @@ Mithilfe von Lernkarten, auf denen sich vorne eine Frage und hinten die Antwort 
 Beantwortest du eine Karte korrekt, wandert sie in den nächsten Kasten.
 Bei einer falschen Antwort fällt sie zurück in einen früheren Kasten.
 So wird sichergestellt, dass du schwierige Themen häufiger wiederholst und dir die Inhalte langfristig besser einprägen kannst.
+
+## Aufbau
+![Diagramm](/Zeddelkaschde.png)
