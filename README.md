@@ -1,3 +1,5 @@
+[![.NET](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/dotnet.yml/badge.svg)](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/dotnet.yml)
+
 # Zeddelkaschde
 ## Lernsystem basierend auf dem Leitner-Prinzip
 Zeddelkaschde ist ein interaktives Lernsystem, das dir hilft, Wissen nachhaltig zu festigen – ganz nach dem bewährten Leitner-System.
