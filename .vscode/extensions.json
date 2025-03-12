@@ -3,6 +3,7 @@
         "ms-dotnettools.csdevkit",
         "fernandoescolar.vscode-solution-explorer",
         "ms-vscode.vs-keybindings",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "qwtel.sqlite-viewer"
     ]
 }
