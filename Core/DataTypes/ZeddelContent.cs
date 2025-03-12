@@ -1,7 +1,8 @@
-namespace Core;
+namespace Core.DataTypes;
 
 public class ZeddelContent
 {
-    public List<Attachment> Attachments;
-    public string Text;
+    public required Guid Id { get; set; }
+    public required string Text { get; set; }
+    public IEnumerable<Attachment> Attachments { get; set; }
 }

@@ -1,17 +1,40 @@
-﻿using Core;
-using NUnit.Framework.Internal;
+﻿using NUnit.Framework.Internal;
 using AutoFixture;
+using Moq;
+using Core.DataAccessLayer;
+using Core.DataTypes;
+using Core.LogicLayer;
 
-namespace CoreTests;
-public class LogicTests
+namespace CoreTests.LogicLayer;
+
+public class ZeddelkaschdeLogicLayerTests
 {
+    [Test]
+    public void ConstructorTest() =>
+        Assert.That(new ZeddelkaschdeLogicLayer(null), Is.InstanceOf<IZeddelkaschdeLogicLayer>());
+
     public class ZeddelTests
     {
         private Fixture _fixture = new();
 
+        private IZeddelkaschdeAccessLayer _accessLayer;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var mockZeddelList = new List<Zeddel>();
+            var accessLayerMock = new Mock<IZeddelkaschdeAccessLayer>();
+            accessLayerMock.Setup(mock => mock.GetZeddelList()).Returns(mockZeddelList);
+            accessLayerMock.Setup(mock => mock.AddZeddel(It.IsAny<Zeddel>()))
+                .Callback<Zeddel>(mockZeddelList.Add);
+            accessLayerMock.Setup(mock => mock.RemoveZeddel(It.IsAny<Zeddel>()))
+                .Callback<Zeddel>(zeddel => mockZeddelList.Remove(zeddel));
+            _accessLayer = accessLayerMock.Object;
+        }
+
         [Test]
         public void GetZeddelListTest_InitiallyEmpty() =>
-            Assert.That(new Logic().GetZeddelList(), Is.Empty);
+            Assert.That(new ZeddelkaschdeLogicLayer(_accessLayer).GetZeddelList(), Is.Empty);
 
         [Test]
         public void AddZeddelTest()
@@ -19,7 +42,7 @@ public class LogicTests
             var zeddel1 = _fixture.Create<Zeddel>();
             var zeddel2 = _fixture.Create<Zeddel>();
 
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
 
             target.AddZeddel(zeddel1);
             target.AddZeddel(zeddel2);
@@ -34,7 +57,7 @@ public class LogicTests
         public void RemoveZeddelTest()
         {
             var zeddel = _fixture.Create<Zeddel>();
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
             target.AddZeddel(zeddel);
 
             target.RemoveZeddel(zeddel);
@@ -44,11 +67,11 @@ public class LogicTests
         }
 
         [Test]
-        public void RemoveZeddelTest_ZettelNotFound()
+        public void RemoveZeddelTest_ZeddelNotFound()
         {
             var addedZeddel = _fixture.Create<Zeddel>();
             var notAddedZeddel = _fixture.Create<Zeddel>();
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
             target.AddZeddel(addedZeddel);
 
             Assert.DoesNotThrow(() => target.RemoveZeddel(notAddedZeddel));
@@ -62,9 +85,25 @@ public class LogicTests
     {
         private Fixture _fixture = new();
 
+        private IZeddelkaschdeAccessLayer _accessLayer;
+
+
+        [SetUp]
+        public void SetUp()
+        {
+            var mockKaschdeList = new List<Kaschde>();
+            var accessLayerMock = new Mock<IZeddelkaschdeAccessLayer>();
+            accessLayerMock.Setup(mock => mock.GetKaschdeList()).Returns(mockKaschdeList);
+            accessLayerMock.Setup(mock => mock.AddKaschde(It.IsAny<Kaschde>()))
+                .Callback<Kaschde>(mockKaschdeList.Add);
+            accessLayerMock.Setup(mock => mock.RemoveKaschde(It.IsAny<Kaschde>()))
+                .Callback<Kaschde>(kaschde => mockKaschdeList.Remove(kaschde));
+            _accessLayer = accessLayerMock.Object;
+        }
+
         [Test]
         public void GetKaschdeListTest_InitiallyEmpty() =>
-            Assert.That(new Logic().GetKaschdeList(), Is.Empty);
+            Assert.That(new ZeddelkaschdeLogicLayer(_accessLayer).GetKaschdeList(), Is.Empty);
 
         [Test]
         public void AddKaschdeTest()
@@ -72,7 +111,7 @@ public class LogicTests
             var kaschde1 = _fixture.Create<Kaschde>();
             var kaschde2 = _fixture.Create<Kaschde>();
 
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
 
             target.AddKaschde(kaschde1);
             target.AddKaschde(kaschde2);
@@ -87,7 +126,7 @@ public class LogicTests
         public void RemoveKaschdeTest()
         {
             var kaschde = _fixture.Create<Kaschde>();
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
             target.AddKaschde(kaschde);
             var result = target.GetKaschdeList();
 
@@ -101,7 +140,7 @@ public class LogicTests
         {
             var addedKaschde = _fixture.Create<Kaschde>();
             var notAddedKaschde = _fixture.Create<Kaschde>();
-            var target = new Logic();
+            var target = new ZeddelkaschdeLogicLayer(_accessLayer);
             target.AddKaschde(addedKaschde);
 
             Assert.DoesNotThrow(() => target.RemoveKaschde(notAddedKaschde));

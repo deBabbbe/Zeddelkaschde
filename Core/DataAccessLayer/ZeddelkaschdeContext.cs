@@ -1,8 +1,9 @@
+using Core.DataTypes;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core;
+namespace Core.DataAccessLayer;
 
-public class ZettelkaschdeContext : DbContext
+public class ZeddelkaschdeContext : DbContext
 {
     public DbSet<Zeddel> ZeddelList { get; set; }
 
@@ -10,7 +11,7 @@ public class ZettelkaschdeContext : DbContext
 
     public string DbPath { get; }
 
-    public ZettelkaschdeContext()
+    public ZeddelkaschdeContext()
     {
         DbPath = @".\zeddelkaschde.db";
     }

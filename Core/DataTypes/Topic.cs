@@ -1,4 +1,4 @@
-namespace Core;
+namespace Core.DataTypes;
 
 public class Topic
 {

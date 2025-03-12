@@ -1,6 +1,4 @@
-using Core.DataTypes;
-
-namespace Core;
+namespace Core.DataTypes;
 
 public class Kaschde
 {
