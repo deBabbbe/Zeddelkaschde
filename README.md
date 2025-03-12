@@ -1,4 +1,5 @@
 [![.NET](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/dotnet.yml/badge.svg)](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/dotnet.yml)
+[![CodeQL Advanced](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/codeql.yml/badge.svg)](https://github.com/deBabbbe/Zeddelkaschde/actions/workflows/codeql.yml)
 
 # Zeddelkaschde
 ## Lernsystem basierend auf dem Leitner-Prinzip
