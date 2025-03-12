@@ -10,3 +10,6 @@ So wird sichergestellt, dass du schwierige Themen häufiger wiederholst und dir 
 
 ## Aufbau
 ![Diagramm](./Zeddelkaschde.PNG)
+
+## Datenbank
+Es wird eine SQLite Datenbank (zeddelkaschde.db) über das Entity Framework verwendet.
