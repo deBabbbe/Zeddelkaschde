@@ -1,4 +1,5 @@
 using Core.DataTypes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.DataAccessLayer;
 
@@ -16,7 +17,12 @@ public class ZeddelkaschdeAccessLayer : IZeddelkaschdeAccessLayer
     public List<Zeddel> GetZeddelList()
     {
         using var db = new ZeddelkaschdeContext();
-        return [.. db.ZeddelList];
+        return
+        [
+            .. db.ZeddelList
+            .Include(zeddel => zeddel.Answer)
+            .Include(zeddel => zeddel.Question).ToList()
+        ];
     }
 
 

@@ -35,14 +35,14 @@ namespace Core.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ZeddelContentId")
+                    b.Property<Guid>("ZeddelContentId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ZeddelContentId");
 
-                    b.ToTable("Attachment");
+                    b.ToTable("Attachments");
                 });
 
             modelBuilder.Entity("Core.DataTypes.FachData", b =>
@@ -101,24 +101,18 @@ namespace Core.Migrations
 
                     b.HasIndex("ZeddelId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("Core.DataTypes.Zeddel", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("AnswerId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AnswerId");
 
                     b.HasIndex("QuestionId");
 
@@ -137,14 +131,18 @@ namespace Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ZeddelContent");
+                    b.ToTable("ZeddelContents");
                 });
 
             modelBuilder.Entity("Core.DataTypes.Attachment", b =>
                 {
-                    b.HasOne("Core.DataTypes.ZeddelContent", null)
+                    b.HasOne("Core.DataTypes.ZeddelContent", "ZeddelContent")
                         .WithMany("Attachments")
-                        .HasForeignKey("ZeddelContentId");
+                        .HasForeignKey("ZeddelContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ZeddelContent");
                 });
 
             modelBuilder.Entity("Core.DataTypes.FachData", b =>
@@ -173,8 +171,8 @@ namespace Core.Migrations
                 {
                     b.HasOne("Core.DataTypes.ZeddelContent", "Answer")
                         .WithMany()
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Core.DataTypes.ZeddelContent", "Question")

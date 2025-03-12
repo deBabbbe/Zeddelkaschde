@@ -24,7 +24,7 @@ namespace Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZeddelContent",
+                name: "ZeddelContents",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -32,27 +32,28 @@ namespace Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZeddelContent", x => x.Id);
+                    table.PrimaryKey("PK_ZeddelContents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attachment",
+                name: "Attachments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Data = table.Column<byte[]>(type: "BLOB", nullable: false),
                     ContentType = table.Column<string>(type: "TEXT", nullable: false),
-                    ZeddelContentId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    ZeddelContentId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attachment", x => x.Id);
+                    table.PrimaryKey("PK_Attachments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attachment_ZeddelContent_ZeddelContentId",
+                        name: "FK_Attachments_ZeddelContents_ZeddelContentId",
                         column: x => x.ZeddelContentId,
-                        principalTable: "ZeddelContent",
-                        principalColumn: "Id");
+                        principalTable: "ZeddelContents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,22 +61,21 @@ namespace Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AnswerId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ZeddelList", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ZeddelList_ZeddelContent_AnswerId",
-                        column: x => x.AnswerId,
-                        principalTable: "ZeddelContent",
+                        name: "FK_ZeddelList_ZeddelContents_Id",
+                        column: x => x.Id,
+                        principalTable: "ZeddelContents",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ZeddelList_ZeddelContent_QuestionId",
+                        name: "FK_ZeddelList_ZeddelContents_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "ZeddelContent",
+                        principalTable: "ZeddelContents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -106,7 +106,7 @@ namespace Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
+                name: "Topics",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -115,17 +115,17 @@ namespace Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topic", x => x.Id);
+                    table.PrimaryKey("PK_Topics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Topic_ZeddelList_ZeddelId",
+                        name: "FK_Topics_ZeddelList_ZeddelId",
                         column: x => x.ZeddelId,
                         principalTable: "ZeddelList",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachment_ZeddelContentId",
-                table: "Attachment",
+                name: "IX_Attachments_ZeddelContentId",
+                table: "Attachments",
                 column: "ZeddelContentId");
 
             migrationBuilder.CreateIndex(
@@ -139,14 +139,9 @@ namespace Core.Migrations
                 column: "ZeddelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_ZeddelId",
-                table: "Topic",
+                name: "IX_Topics_ZeddelId",
+                table: "Topics",
                 column: "ZeddelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ZeddelList_AnswerId",
-                table: "ZeddelList",
-                column: "AnswerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ZeddelList_QuestionId",
@@ -158,13 +153,13 @@ namespace Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Attachment");
+                name: "Attachments");
 
             migrationBuilder.DropTable(
                 name: "FachData");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "KaschdeList");
@@ -173,7 +168,7 @@ namespace Core.Migrations
                 name: "ZeddelList");
 
             migrationBuilder.DropTable(
-                name: "ZeddelContent");
+                name: "ZeddelContents");
         }
     }
 }

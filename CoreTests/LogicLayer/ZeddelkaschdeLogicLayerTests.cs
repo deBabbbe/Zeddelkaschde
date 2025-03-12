@@ -4,6 +4,7 @@ using Moq;
 using Core.DataAccessLayer;
 using Core.DataTypes;
 using Core.LogicLayer;
+using AutoFixture.AutoMoq;
 
 namespace CoreTests.LogicLayer;
 
@@ -15,9 +16,18 @@ public class ZeddelkaschdeLogicLayerTests
 
     public class ZeddelTests
     {
-        private Fixture _fixture = new();
+        private Fixture _fixture;
 
         private IZeddelkaschdeAccessLayer _accessLayer;
+
+        public ZeddelTests()
+        {
+            _fixture = new Fixture();
+            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+                .ForEach(b => _fixture.Behaviors.Remove(b));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        }
 
         [SetUp]
         public void SetUp()
@@ -83,10 +93,18 @@ public class ZeddelkaschdeLogicLayerTests
 
     public class KaschdeTests
     {
-        private Fixture _fixture = new();
+        private readonly Fixture _fixture;
 
         private IZeddelkaschdeAccessLayer _accessLayer;
 
+        public KaschdeTests()
+        {
+            _fixture = new Fixture();
+            _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
+                .ForEach(b => _fixture.Behaviors.Remove(b));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        }
 
         [SetUp]
         public void SetUp()

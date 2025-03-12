@@ -1,6 +1,6 @@
 namespace Core.DataTypes;
 
-public class Topic
+public record Topic
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

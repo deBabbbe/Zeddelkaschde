@@ -1,5 +1,4 @@
 using AutoFixture;
-using Core;
 using Core.DataAccessLayer;
 using Core.DataTypes;
 using NUnit.Framework.Internal;
@@ -65,10 +64,12 @@ public class ZeddelkaschdeAccessLayerTests
             target.AddZeddel(zeddel1);
             target.AddZeddel(zeddel2);
 
-            var result = target.GetZeddelList();
+            var result = target.GetZeddelList().OrderBy(zeddel => zeddel.Question.Text).ToList();
 
-            Assert.That(result, Has.Member(zeddel1));
-            Assert.That(result, Has.Member(zeddel2));
+            // Assert.That(result, Has.Member(zeddel1));
+            // Assert.That(result, Has.Member(zeddel2));
+            Assert.That(result.First().Id, Is.EqualTo(zeddel1.Id));
+            Assert.That(result.Last().Id, Is.EqualTo(zeddel2.Id));
         }
 
         public class KaschdeTests

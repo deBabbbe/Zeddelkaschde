@@ -1,6 +1,6 @@
 namespace Core.DataTypes;
 
-public class Kaschde
+public record Kaschde
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

@@ -1,6 +1,6 @@
 namespace Core.DataTypes;
 
-public class FachData
+public record FachData
 {
     public Guid Id { get; set; }
     public EPriority Priority { get; set; }
