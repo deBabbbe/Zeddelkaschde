@@ -19,27 +19,27 @@ public class ZeddelkaschdeContext : DbContext
         Database.EnsureCreated();
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) =>
-        options.UseSqlite($"Data Source={DbPath}");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.UseSqlite($"Data Source={DbPath}");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Zeddel>()
-            .HasOne(z => z.Question)
+            .HasOne(zeddel => zeddel.Question)
             .WithMany()
-            .HasForeignKey(z => z.Id)
+            .HasForeignKey(zeddel => zeddel.Id)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Zeddel>()
-            .HasOne(z => z.Answer)
+            .HasOne(zeddel => zeddel.Answer)
             .WithMany()
-            .HasForeignKey(z => z.Id)
+            .HasForeignKey(zeddel => zeddel.Id)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Attachment>()
-            .HasOne(a => a.ZeddelContent)
-            .WithMany(z => z.Attachments)
-            .HasForeignKey(a => a.ZeddelContentId);
+            .HasOne(attachment => attachment.ZeddelContent)
+            .WithMany(zeddelContent => zeddelContent.Attachments)
+            .HasForeignKey(attachment => attachment.ZeddelContentId);
 
         base.OnModelCreating(modelBuilder);
     }
